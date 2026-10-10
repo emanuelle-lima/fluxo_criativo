@@ -1,0 +1,54 @@
+name: Sincronizar Severino com ReadyToGo
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-severino
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Sincronizar origem e branch pessoal
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/ReadyToGo-Education/fluxo_criativo.git
+          git fetch upstream main
+          git fetch origin main codex-pessoal
+
+          # A main do fork recebe as atualizações sem enviar nada à ReadyToGo.
+          git checkout -B main origin/main
+          git merge --no-edit upstream/main
+          git push origin main
+
+          # Mudanças pessoais permanecem na branch codex-pessoal.
+          git checkout -B codex-pessoal origin/codex-pessoal
+          git merge --no-edit main
+
+          # Recria as exportações de skills e agentes após cada atualização.
+          python3 scripts/exportar-para-codex.py
+          git add .agents/ .codex/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(codex): atualizar artefatos exportados"
+          fi
+          python3 scripts/exportar-para-codex.py --verificar
+          git push origin codex-pessoal
+
+          # Conflitos de merge ou falhas de exportação interrompem o job.
+          # Nenhuma resolução destrutiva ou push forçado é realizada.
