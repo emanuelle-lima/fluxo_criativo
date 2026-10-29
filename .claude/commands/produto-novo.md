@@ -56,6 +56,7 @@ Você já tem um produto ativo: **{nome do produto}** ({tipo}).
 1. Continuar com este produto
 2. Criar um produto novo (Já tenho nome, formato e preço)
 3. Quero ideias de novo produto
+4. Modo Consulta (analisar produtos da mentoria sem salvar nada)
 
 Digite o número:
 ```
@@ -63,6 +64,7 @@ Digite o número:
 - Se escolher **1**: encerre a skill com a mensagem "Seguindo com **{nome}**. Me diga o que quer criar (copy, página, anúncio, funil) ou digite o comando da skill que quer usar." e pare.
 - Se escolher **2**: siga direto para o **Ramo 1** abaixo (pule o Passo 2).
 - Se escolher **3**: siga direto para o **Ramo 2** abaixo (pule o Passo 2).
+- Se escolher **4**: ative o Modo Consulta conforme a seção "MODO CONSULTA (SEM REGISTRO DE PRODUTO)" do CLAUDE.md. Apresente a mensagem de ativação e aguarde a pergunta do usuário. Não crie pastas, não salve arquivos, não altere `.ativo`.
 
 **Se não houver produto ativo** (arquivo `.ativo` inexistente ou vazio), siga para o Passo 2.
 
@@ -76,12 +78,14 @@ Você já tem um produto cadastrado, quer criar um novo, ou quer ideias de produ
 1. Já tenho um produto e quero cadastrar agora
 2. Quero criar um produto novo (tenho uma ideia)
 3. Quero ideias de produto (ainda não sei o que criar)
+4. Modo Consulta (analisar produtos da mentoria sem salvar nada)
 
 Digite o número:
 ```
 
 - Opção **1** ou **2**: siga para o **Ramo 1**.
 - Opção **3**: siga para o **Ramo 2**.
+- Opção **4**: ative o Modo Consulta conforme a seção "MODO CONSULTA (SEM REGISTRO DE PRODUTO)" do CLAUDE.md. Apresente a mensagem de ativação e aguarde a pergunta do usuário. Não crie pastas, não salve arquivos, não altere `.ativo`.
 
 ---
 

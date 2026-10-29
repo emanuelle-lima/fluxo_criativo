@@ -368,8 +368,52 @@ Vale para qualquer mensagem de abertura: "Olá", "oi", "começar", "quero criar 
 1. A primeira mensagem do usuário começa com `/` (ele está invocando explicitamente outra skill ou comando, ex: `/copy-pagina`, `/produto-trocar`, `/lt-funil`).
 2. A primeira mensagem invoca explicitamente um agente pelo nome (ex: "usar o agente construtor-de-paginas", "chamar estrategista-de-produto").
 3. A primeira mensagem é uma pergunta técnica específica sobre o projeto que não envolve criar ou trocar produto (ex: "por que o comando X está dando erro?", "o que faz a skill Y?"). Nesse caso, responda a dúvida direto.
+4. A primeira mensagem indica que o usuário quer usar o modo consulta (ex: "modo consulta", "quero consultar", "consulta", "vou consultar sobre um produto da mentoria"). Nesse caso, ative o Modo Consulta diretamente, sem acionar `produto-novo`. Veja a seção "MODO CONSULTA" abaixo.
 
 Se a mensagem do usuário contiver informações úteis (nome, nicho, ideia de produto), guarde no contexto e use dentro do fluxo da skill `produto-novo` em vez de pedir de novo.
+
+---
+
+## MODO CONSULTA (SEM REGISTRO DE PRODUTO)
+
+> Esta seção define o comportamento do projeto quando o usuário está usando o Severino como ferramenta de consulta para melhorar seu atendimento na mentoria, e não para cadastrar um produto próprio.
+
+**O que é:** o Modo Consulta permite usar toda a inteligência do projeto (metodologia VTSD, Light Copy, Mandala da Criatividade, Estrutura 8D, Identidade do Consumidor, pesquisa de mercado, diagnóstico de funil, análise de copy, feedback de página, etc.) para analisar, diagnosticar e orientar sobre produtos de mentorados, sem que nenhum dado fique salvo em `meus-produtos/`.
+
+**Quando ativar:**
+- O usuário diz "modo consulta", "quero consultar", "consulta", "vou consultar sobre um produto" ou variação clara
+- O usuário indica que está analisando o produto de outra pessoa (mentorado, aluno, cliente)
+- O usuário pede para não salvar nada no projeto
+
+**Como ativar:**
+1. O Modo Consulta pode ser ativado na abertura da sessão (exceção 4 da regra de abertura) ou a qualquer momento se o usuário pedir
+2. Ao ativar, apresentar:
+
+```
+Modo Consulta ativado. Nenhum produto será registrado nesta sessão.
+
+Você pode me perguntar sobre qualquer produto da sua mentoria. Eu aplico toda a metodologia VTSD, Light Copy e as ferramentas do projeto para te ajudar a diagnosticar, orientar e resolver.
+
+O que quer consultar?
+```
+
+**Regras do Modo Consulta:**
+
+1. **Nenhum arquivo é criado ou alterado em `meus-produtos/`.** Nada de pasta, slug, `.ativo`, `perfil.md`, `tipo.md`, `preco.md`, `idconsumidor.md`, `pesquisa-mercado.md`, `painel-entregas.html` nem qualquer entrega. Zero escrita em disco relacionada a produto.
+2. **Nenhum script de painel roda.** Nem `painel-atualizar.py`, nem `painel-incremental.py`, nem qualquer outro script que grave em `meus-produtos/`.
+3. **O produto ativo (`meus-produtos/.ativo`) não é alterado.** Se já existia um produto ativo de sessão anterior, ele permanece intacto.
+4. **Toda a metodologia continua disponível.** O assistente aplica VTSD, Light Copy, Mandala, Estrutura 8D, análise de copy, diagnóstico de funil, feedback de página, pesquisa de mercado (via WebSearch, sem salvar arquivo), identidade do consumidor, objeções, Decorados, Urgências Ocultas, tudo. A diferença é que o resultado fica só na conversa.
+5. **Skills que exigem produto ativo NÃO são bloqueadas, mas adaptadas.** Se o usuário pedir para rodar uma skill (ex: `/copy-pagina`, `/feedback-pagina`, `/trafego-diagnostico`), o assistente coleta as informações necessárias via conversa (Quadro, Furadeira, público, etc.) e entrega o resultado no chat, sem salvar em arquivo. Se a skill normalmente geraria um HTML ou MD, o conteúdo é apresentado na conversa ou, no caso de HTML, salvo apenas no diretório de scratchpad (`/tmp/claude-*/scratchpad/`) como arquivo temporário, nunca em `meus-produtos/`.
+6. **O contexto do produto consultado vive só na conversa.** O assistente pode fazer as mesmas perguntas de concepção (Quadro, Furadeira, público, preço, nicho) para entender o produto, mas guarda tudo apenas no contexto da conversa. Se a sessão acabar, os dados somem.
+7. **O assistente pode consultar vários produtos na mesma sessão.** Não há limite. Basta o usuário dizer "agora quero consultar sobre outro produto" e o assistente recomeça as perguntas relevantes.
+8. **Pesquisa de mercado roda normalmente via WebSearch**, mas o resultado é apresentado na conversa em vez de salvo em arquivo.
+9. **O usuário pode sair do Modo Consulta a qualquer momento** dizendo "quero cadastrar um produto" ou "sair do modo consulta". Nesse caso, acione a skill `produto-novo` normalmente.
+
+**O que o Modo Consulta NÃO muda:**
+- Regras de acentuação, Light Copy, checklist de copy, revisora, tokens/segredos, tudo continua valendo
+- A qualidade da análise e das entregas é idêntica ao modo normal
+- O assistente continua "pensando em voz alta" e anunciando próximos passos
+- O gate de escrita na Meta Graph API continua obrigatório (se aplicável)
 
 ---
 
@@ -645,6 +689,9 @@ Em seguida, liste os comandos disponíveis organizados por categoria:
 - `/produto-novo`. Criar um novo produto
 - `/produto-excluir`. Excluir um produto e todas as suas entregas
 - `/produto-zerar`. Zerar o perfil.md e/ou idconsumidor.md sem apagar o produto
+
+**Consulta (sem salvar produto):**
+- **Modo Consulta**. Analisar produtos de mentorados usando toda a metodologia VTSD, sem registrar nada no projeto. Diga "modo consulta" ou escolha a opção 4 no menu inicial
 
 **Copy:**
 - `/copy-pagina`. Criar copy e/ou página HTML profissional (vendas, captura ou obrigado)
