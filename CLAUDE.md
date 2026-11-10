@@ -426,9 +426,9 @@ O que quer consultar?
 Todo feedback para mentorado sai em duas partes, nesta ordem:
 
 1. **PARTE 1. Nota de análise:** a explicação que o Severino já entrega hoje (diagnóstico, checklists, raciocínio, copy corrigida), para a usuária.
-2. **PARTE 2. Mensagem pronta para copiar:** a mensagem para o mentorado, dentro de um bloco de código e com formatação de WhatsApp, escrita pelo prompt guardado em `.claude/rules/feedback-mentorado.md` (tom consultivo, temas agrupados, sem emojis, sem travessão, parágrafos sem ponto final no fim).
+2. **PARTE 2. Mensagem pronta para copiar:** a mensagem para o mentorado, em texto formatado no próprio chat (títulos, negritos e listas, sem bloco de código), para a usuária colar num Google Docs. Escrita pelo prompt e pelo formato de documento guardados em `.claude/rules/feedback-mentorado.md` (tom consultivo, temas na ordem da página, sem emojis, sem travessão, parágrafos sem ponto final no fim, sem fechamento).
 
-Vale quando a usuária manda as próprias observações sobre a página, o funil ou a VSL de um mentorado, a cada bloco do `/feedback-pagina` e do `/feedback-low-ticket`, e em qualquer análise de produto de mentorado no Modo Consulta.
+Vale quando a usuária manda as próprias observações sobre a página, o funil ou a VSL de um mentorado, no `/feedback-pagina` e no `/feedback-low-ticket` (Parte 1 a cada bloco, Parte 2 única no fim) e em qualquer análise de produto de mentorado no Modo Consulta.
 
 ---
 

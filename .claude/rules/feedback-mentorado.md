@@ -8,13 +8,13 @@
 Sempre que houver um feedback para um mentorado, em qualquer uma destas situações:
 
 1. A usuária manda as próprias observações, análises ou anotações sobre a página, o funil, a VSL ou o criativo de um mentorado e pede para organizar.
-2. Rodar o `/feedback-pagina` (a cada bloco entregue: Copy, Design e Depoimentos).
-3. Rodar o `/feedback-low-ticket` (a cada bloco entregue: Copy + Estrutura e Design).
+2. Rodar o `/feedback-pagina` (Parte 1 a cada bloco: Copy, Design e Depoimentos; Parte 2 única no fim).
+3. Rodar o `/feedback-low-ticket` (Parte 1 a cada bloco: Copy + Estrutura e Design; Parte 2 única no fim).
 4. Qualquer análise feita no Modo Consulta sobre produto de mentorado.
 
 ## Formato obrigatório da resposta
 
-Toda resposta de feedback tem duas partes, nesta ordem, separadas por uma linha horizontal (`---`).
+Toda resposta de feedback tem duas partes, nesta ordem, separadas por uma linha horizontal (`---`). Nos comandos em blocos, a Parte 2 vem uma vez só, no fim (ver "Regras de convivência com as skills").
 
 ### PARTE 1. Nota de análise (para a usuária)
 
@@ -26,21 +26,24 @@ Título fixo: `## PARTE 1. Nota de análise`
 
 Título fixo: `## PARTE 2. Mensagem pronta para copiar`
 
-Logo abaixo do título, a mensagem vai inteira dentro de um bloco de código (três crases, sem linguagem), para a usuária copiar com um clique e colar no WhatsApp. Dentro do bloco, a formatação de WhatsApp: negrito com um asterisco de cada lado (`*assim*`), sem `#` de título markdown. Os subtítulos de tema também vão em negrito com asterisco.
+A usuária copia a mensagem do chat e cola num documento do Google Docs, que ela compartilha com o mentorado. Por isso a mensagem vem como **texto formatado no próprio chat** (nunca dentro de bloco de código e nunca com asterisco de WhatsApp), para que títulos, negritos e listas passem junto na colagem.
 
-Nada vem depois do bloco, exceto a pergunta de continuidade da skill (ex: "Quer continuar para o feedback de design?").
+Logo abaixo do título, uma linha `**Início da mensagem**`, depois a mensagem, depois uma linha `**Fim da mensagem**`. Nada vem depois disso, exceto a pergunta de continuidade da skill.
 
-A Parte 2 segue o prompt abaixo, integralmente. Ele é a régua desta parte e tem prioridade sobre o "Tom e postura" das skills de feedback (que continua valendo para a Parte 1).
+A Parte 2 segue o prompt abaixo, com os ajustes de formato desta seção, que têm prioridade sobre ele. O prompt tem prioridade sobre o "Tom e postura" das skills de feedback (que continua valendo para a Parte 1).
 
-## Regras de convivência com as skills
+### Formato do documento (modelo: feedback da PV da Paula)
 
-- **Feedback em blocos (`/feedback-pagina`, `/feedback-low-ticket`):** cada bloco entregue ganha a sua Parte 1 e a sua Parte 2 (a Parte 2 cobre só o tema do bloco). Na entrega final, a skill oferece também uma opção extra: "Receber a mensagem completa para o mentorado (todos os blocos juntos)", que junta as Partes 2 numa mensagem única, com uma só abertura, um só fechamento e uma seção curta de prioridades.
-- **Nome do mentorado:** se a usuária não informou, perguntar uma vez antes da primeira Parte 2. Se ela preferir sem nome, abrir com uma saudação neutra.
-- **Nada inventado:** a Parte 2 só usa o que está na Parte 1 e no que a usuária trouxe. Nenhum número, depoimento, prova ou resultado novo.
-- **Acentuação e travessão:** as regras globais do CLAUDE.md valem para as duas partes.
-- **Modo Consulta:** nada é salvo em `meus-produtos/`. As duas partes ficam só na conversa.
-
----
+1. **Abertura, sem título.** Até três parágrafos curtos: a saudação ("Oi, {nome}, tudo bem?"), o que foi analisado e o objetivo dos ajustes, e o ajuste principal ("O principal ajuste que eu faria é..."). É aqui que aparece a prioridade número 1.
+2. **Títulos de tema** em `##`, no formato "Tema: o que fazer". Ex: "Hero: fortalecer a identificação e deixar a promessa mais concreta", "Depoimentos: antecipar as provas e trazer situações mais concretas", "Stack de valor: construir melhor a percepção da oferta". Quando o tema é só um nome, sem verbo, também vale ("Headlines das demais seções", "Ajustes de Light Copy"). Os temas seguem a ordem da página.
+3. **Subtítulos dentro do tema** como parágrafo só em negrito, no tamanho do texto, sem `###`. Ex: `**Estudos**`, `**Antes e depois**`, `**"Já tentei de tudo"**` (objeção entre aspas), `**Travessões e hífens utilizados como travessão**`.
+4. **Rótulos em negrito no começo da linha** quando a sugestão é uma peça de copy: `**Headline:** texto`, `**Subheadline:** texto`.
+5. **Copy sugerida** numa linha própria: entre aspas ("O que muda na sua cabeça quando a festa de sábado deixa de ser uma ameaça") ou toda em negrito, quando for a headline principal da seção. Antes dela, uma frase de apoio curta: "Uma possibilidade:", "Sugestão:", "Uma possibilidade de headline para essa seção seria:", "Por exemplo:".
+6. **Listas com marcador** só para itens curtos: entregáveis do stack, trechos da página citados como exemplo de erro. Nunca para explicação.
+7. **Pontuação:** parágrafo de texto corrido sem ponto final no fim (ponto normal entre frases). Copy sugerida, headline e subheadline mantêm a pontuação própria.
+8. **Termina na última seção.** Sem fechamento, sem despedida e sem seção de prioridades no fim. Isso substitui os itens 6 (seção de prioridades) e 8 (fechamento) do prompt.
+9. **Sem marcação de imagem.** Não escrever "[inserir print aqui]": a usuária coloca as imagens de referência onde quiser.
+10. Sem emojis, sem travessão, sem `---` dentro da mensagem e sem tabela.
 
 ## PROMPT DA PARTE 2 (texto da usuária, preservado)
 
@@ -173,7 +176,7 @@ Finalize com um fechamento cordial, retomando brevemente a direção principal d
 
 ### 9. Formato da resposta
 
-Entregue o feedback como uma mensagem completa, pronta para copiar e compartilhar pelo WhatsApp ou outro canal de comunicação
+Entregue o feedback como uma mensagem completa, pronta para copiar e colar num documento do Google Docs e compartilhar com o mentorado
 
 Não apresente apenas um resumo das recomendações. Desenvolva cada ponto com contexto, justificativa e sugestão prática
 

@@ -41,12 +41,12 @@ Este comando roda por padrão no Modo Consulta (CLAUDE.md): o produto analisado 
 
 ## REGRA DE ENTREGA EM DUAS PARTES (OBRIGATÓRIA)
 
-Carregue `.claude/rules/feedback-mentorado.md` antes do primeiro bloco. Cada bloco entregue sai em duas partes, separadas por `---`:
+Carregue `.claude/rules/feedback-mentorado.md` antes do primeiro bloco.
 
-1. `## PARTE 1. Nota de análise`: o bloco no formato de output desta skill, sem mudança nenhuma.
-2. `## PARTE 2. Mensagem pronta para copiar`: a mensagem para o mentorado sobre o tema do bloco, dentro de um bloco de código e com formatação de WhatsApp, escrita pelo prompt da regra. O tom consultivo da regra vale para esta parte; o tom desta skill vale para a Parte 1.
+1. **Cada bloco** sai só com a `## PARTE 1. Nota de análise`: o bloco no formato de output desta skill, sem mudança nenhuma, seguido da pergunta de continuidade.
+2. **Depois do último bloco** (ou quando a usuária disser que não quer os próximos), entregue uma única `## PARTE 2. Mensagem pronta para copiar`, com todos os blocos juntos, no formato de documento da regra (texto formatado para colar no Google Docs, temas na ordem da página, sem fechamento). Só depois dela vem o menu de entrega final.
 
-A pergunta de continuidade do bloco vem depois da Parte 2. Se o nome do mentorado ainda não foi informado, pergunte uma vez antes do primeiro bloco (no Passo 1, junto da coleta de contexto, como pergunta separada).
+O tom consultivo da regra vale para a Parte 2; o tom desta skill vale para a Parte 1. Se o nome do mentorado ainda não foi informado, pergunte uma vez no Passo 1, como pergunta separada.
 
 ---
 
@@ -246,12 +246,7 @@ Feedback completo entregue. O que quer fazer agora?
 1. Receber a copy corrigida (texto pronto)
 2. Receber a copy corrigida e um prompt novo para o Lovable montar a página
 3. Já tenho o que preciso
-4. Receber a mensagem completa para o mentorado (os dois blocos juntos)
 ```
-
-### Opção 4. Mensagem completa para o mentorado
-
-Junte as Partes 2 dos dois blocos numa mensagem única, pelo prompt de `.claude/rules/feedback-mentorado.md`: uma só abertura, temas agrupados sem repetição, uma seção curta de prioridades e um só fechamento. Entregue dentro de um bloco de código, com formatação de WhatsApp.
 
 ### Opção 1. Copy corrigida
 
