@@ -33,6 +33,23 @@ Fluxo obrigatório:
 
 ---
 
+## MODO CONSULTA (PADRÃO)
+
+Este comando roda por padrão no Modo Consulta (CLAUDE.md): o produto analisado é do mentorado. Não leia `meus-produtos/.ativo` nem o resumo do produto; o contexto (Quadro, preço, público, nome do mentorado) vem da conversa. Nada é salvo em `meus-produtos/` e nenhum painel é atualizado: onde este comando mandar salvar ou registrar, entregue na conversa. Os trechos sobre bullets salvos, resumo e painel só valem quando a usuária disser que a página é de um produto próprio cadastrado.
+
+---
+
+## REGRA DE ENTREGA EM DUAS PARTES (OBRIGATÓRIA)
+
+Carregue `.claude/rules/feedback-mentorado.md` antes do primeiro bloco.
+
+1. **Cada bloco** sai só com a `## PARTE 1. Nota de análise`: o bloco no formato de output desta skill, sem mudança nenhuma, seguido da pergunta de continuidade.
+2. **Depois do último bloco** (ou quando a usuária disser que não quer os próximos), entregue uma única `## PARTE 2. Mensagem pronta para copiar`, com todos os blocos juntos, no formato de documento da regra (texto formatado para colar no Google Docs, temas na ordem da página, sem fechamento). Só depois dela vem o menu de entrega final.
+
+O tom consultivo da regra vale para a Parte 2; o tom desta skill vale para a Parte 1. Se o nome do mentorado ainda não foi informado, pergunte uma vez no Passo 1, como pergunta separada.
+
+---
+
 ## Erros críticos que não podem passar despercebidos
 
 Cada erro vem com a citação original do Leandro como referência de tom e prioridade.

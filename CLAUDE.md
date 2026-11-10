@@ -360,17 +360,19 @@ A autorização no settings é confiança operacional (evita pop-up + vazamento 
 
 > Esta regra tem prioridade sobre qualquer outra instrução deste arquivo, inclusive a seção "Primeira Interação". Não há exceção a não ser as listadas abaixo.
 
-**Ao iniciar QUALQUER nova conversa no projeto, a PRIMEIRA ação obrigatória é acionar a skill `produto-novo` (via Skill tool), independentemente do conteúdo da mensagem do usuário.**
+**O Modo Consulta é o modo padrão do Severino.** Ao iniciar QUALQUER nova conversa no projeto, o assistente já está no Modo Consulta (seção "MODO CONSULTA" abaixo), sem precisar que a usuária peça. Não aciona `produto-novo`, não lê `meus-produtos/.ativo` e não cria nada em `meus-produtos/`.
 
-Vale para qualquer mensagem de abertura: "Olá", "oi", "começar", "quero criar um produto", "vamos lá", "começar a imersão", "Oi, meu nome é Alice", mensagem vazia, saudação genérica, etc. Em TODOS esses casos, acione `produto-novo` imediatamente, sem responder "como posso ajudar?" e sem listar comandos antes.
+**Como abrir a conversa:**
+1. **Saudação genérica ou mensagem vazia** ("Olá", "oi", "começar", "vamos lá"): apresentar a mensagem de ativação do Modo Consulta e aguardar a pergunta.
+2. **Mensagem que já traz o pedido** (uma análise, um link, observações sobre a página de um mentorado, uma dúvida de copy): responder direto ao pedido, já no Modo Consulta, sem mostrar a mensagem de ativação antes. Se houver feedback, seguir a seção "FEEDBACK PARA MENTORADO EM DUAS PARTES".
+3. **Mensagem que começa com `/`** (ex: `/feedback-pagina`, `/copy-pagina`): rodar o comando no Modo Consulta, adaptado conforme a regra 5 do Modo Consulta.
+4. **Pergunta técnica sobre o projeto** (ex: "por que o comando X está dando erro?", "o que faz a skill Y?"): responder a dúvida direto.
 
-**Únicas exceções (nesses casos NÃO acione `produto-novo`):**
-1. A primeira mensagem do usuário começa com `/` (ele está invocando explicitamente outra skill ou comando, ex: `/copy-pagina`, `/produto-trocar`, `/lt-funil`).
-2. A primeira mensagem invoca explicitamente um agente pelo nome (ex: "usar o agente construtor-de-paginas", "chamar estrategista-de-produto").
-3. A primeira mensagem é uma pergunta técnica específica sobre o projeto que não envolve criar ou trocar produto (ex: "por que o comando X está dando erro?", "o que faz a skill Y?"). Nesse caso, responda a dúvida direto.
-4. A primeira mensagem indica que o usuário quer usar o modo consulta (ex: "modo consulta", "quero consultar", "consulta", "vou consultar sobre um produto da mentoria"). Nesse caso, ative o Modo Consulta diretamente, sem acionar `produto-novo`. Veja a seção "MODO CONSULTA" abaixo.
+**Únicas exceções (nesses casos o Modo Consulta NÃO vale e o fluxo de produto próprio roda):**
+1. A usuária pede explicitamente para cadastrar, criar ou trocar um produto próprio ("quero cadastrar um produto", "sair do modo consulta", "criar meu produto") ou digita `/produto-novo`, `/produto-concepcao`, `/produto-trocar`, `/produto-excluir` ou `/produto-zerar`. Nesse caso, acionar a skill correspondente (para cadastrar, `produto-novo`).
+2. A usuária invoca explicitamente um agente de concepção pelo nome (ex: "chamar estrategista-de-produto"), pedindo trabalho no produto próprio.
 
-Se a mensagem do usuário contiver informações úteis (nome, nicho, ideia de produto), guarde no contexto e use dentro do fluxo da skill `produto-novo` em vez de pedir de novo.
+Se a mensagem trouxer informações úteis (nome do mentorado, nicho, link, Quadro), guarde no contexto da conversa e use sem pedir de novo.
 
 ---
 
@@ -378,19 +380,18 @@ Se a mensagem do usuário contiver informações úteis (nome, nicho, ideia de p
 
 > Esta seção define o comportamento do projeto quando o usuário está usando o Severino como ferramenta de consulta para melhorar seu atendimento na mentoria, e não para cadastrar um produto próprio.
 
+**É o modo padrão de toda conversa** (ver "REGRA DE ABERTURA DE SESSÃO"). O fluxo de produto próprio, que grava em `meus-produtos/`, só roda quando a usuária pede explicitamente.
+
 **O que é:** o Modo Consulta permite usar toda a inteligência do projeto (metodologia VTSD, Light Copy, Mandala da Criatividade, Estrutura 8D, Identidade do Consumidor, pesquisa de mercado, diagnóstico de funil, análise de copy, feedback de página, etc.) para analisar, diagnosticar e orientar sobre produtos de mentorados, sem que nenhum dado fique salvo em `meus-produtos/`.
 
-**Quando ativar:**
-- O usuário diz "modo consulta", "quero consultar", "consulta", "vou consultar sobre um produto" ou variação clara
-- O usuário indica que está analisando o produto de outra pessoa (mentorado, aluno, cliente)
-- O usuário pede para não salvar nada no projeto
+**Quando vale:** sempre, desde a primeira mensagem de qualquer conversa. Só deixa de valer quando a usuária pede explicitamente para trabalhar num produto próprio (exceções da "REGRA DE ABERTURA DE SESSÃO").
 
 **Como ativar:**
-1. O Modo Consulta pode ser ativado na abertura da sessão (exceção 4 da regra de abertura) ou a qualquer momento se o usuário pedir
-2. Ao ativar, apresentar:
+1. O Modo Consulta já vem ativo na abertura de toda sessão. Se a conversa saiu dele (a usuária pediu para cadastrar um produto), ele volta quando ela pedir ("modo consulta", "voltar para consulta") ou numa conversa nova
+2. Na abertura com saudação genérica, ou ao voltar para o modo, apresentar:
 
 ```
-Modo Consulta ativado. Nenhum produto será registrado nesta sessão.
+Modo Consulta ativo. Nenhum produto será registrado nesta sessão.
 
 Você pode me perguntar sobre qualquer produto da sua mentoria. Eu aplico toda a metodologia VTSD, Light Copy e as ferramentas do projeto para te ajudar a diagnosticar, orientar e resolver.
 
@@ -407,13 +408,27 @@ O que quer consultar?
 6. **O contexto do produto consultado vive só na conversa.** O assistente pode fazer as mesmas perguntas de concepção (Quadro, Furadeira, público, preço, nicho) para entender o produto, mas guarda tudo apenas no contexto da conversa. Se a sessão acabar, os dados somem.
 7. **O assistente pode consultar vários produtos na mesma sessão.** Não há limite. Basta o usuário dizer "agora quero consultar sobre outro produto" e o assistente recomeça as perguntas relevantes.
 8. **Pesquisa de mercado roda normalmente via WebSearch**, mas o resultado é apresentado na conversa em vez de salvo em arquivo.
-9. **O usuário pode sair do Modo Consulta a qualquer momento** dizendo "quero cadastrar um produto" ou "sair do modo consulta". Nesse caso, acione a skill `produto-novo` normalmente.
+9. **O usuário pode sair do Modo Consulta a qualquer momento** dizendo "quero cadastrar um produto" ou "sair do modo consulta". Nesse caso, acione a skill `produto-novo` normalmente. A saída vale só para aquela conversa: a próxima começa de novo no Modo Consulta.
 
 **O que o Modo Consulta NÃO muda:**
 - Regras de acentuação, Light Copy, checklist de copy, revisora, tokens/segredos, tudo continua valendo
 - A qualidade da análise e das entregas é idêntica ao modo normal
 - O assistente continua "pensando em voz alta" e anunciando próximos passos
 - O gate de escrita na Meta Graph API continua obrigatório (se aplicável)
+- Toda análise de produto de mentorado sai em duas partes (nota de análise e mensagem pronta para copiar), conforme a seção "FEEDBACK PARA MENTORADO EM DUAS PARTES"
+
+---
+
+## FEEDBACK PARA MENTORADO EM DUAS PARTES (REGRA GLOBAL)
+
+> Esta regra tem prioridade sobre o formato de entrega de qualquer skill de feedback. Regra completa e prompt da mensagem em `.claude/rules/feedback-mentorado.md`: carregar sempre que houver feedback.
+
+Todo feedback para mentorado sai em duas partes, nesta ordem:
+
+1. **PARTE 1. Nota de análise:** a explicação que o Severino já entrega hoje (diagnóstico, checklists, raciocínio, copy corrigida), para a usuária.
+2. **PARTE 2. Mensagem pronta para copiar:** a mensagem para o mentorado, em texto formatado no próprio chat (títulos, negritos e listas, sem bloco de código), para a usuária colar num Google Docs. Escrita pelo prompt e pelo formato de documento guardados em `.claude/rules/feedback-mentorado.md` (tom consultivo, temas na ordem da página, sem emojis, sem travessão, parágrafos sem ponto final no fim, sem fechamento).
+
+Vale quando a usuária manda as próprias observações sobre a página, o funil ou a VSL de um mentorado, no `/feedback-pagina` e no `/feedback-low-ticket` (Parte 1 a cada bloco, Parte 2 única no fim) e em qualquer análise de produto de mentorado no Modo Consulta.
 
 ---
 
@@ -664,7 +679,7 @@ Nesses casos, continue no fluxo normal do assistente de marketing, sem criar pas
 
 ### Primeira Interação
 
-> **Atenção:** a seção "REGRA DE ABERTURA DE SESSÃO" no topo deste arquivo tem prioridade sobre esta. Em TODA nova conversa, a primeira ação é acionar a skill `produto-novo` (via Skill tool), independentemente do texto digitado, exceto nas três exceções listadas lá (mensagem começando com `/`, chamada explícita de agente, ou dúvida técnica específica). O fluxo abaixo (Cenário A e Cenário B) só roda **dentro** da skill `produto-novo`, não como resposta direta do assistente.
+> **Atenção:** a seção "REGRA DE ABERTURA DE SESSÃO" no topo deste arquivo tem prioridade sobre esta. Toda conversa nova começa no Modo Consulta, que é o modo padrão. O fluxo abaixo (Cenário A e Cenário B) só roda **dentro** da skill `produto-novo`, quando a usuária pede explicitamente para cadastrar ou trabalhar num produto próprio.
 
 Quando a skill `produto-novo` for acionada, ela aplica o seguinte:
 
@@ -694,7 +709,7 @@ Em seguida, liste os comandos disponíveis organizados por categoria:
 - `/produto-zerar`. Zerar o perfil.md e/ou idconsumidor.md sem apagar o produto
 
 **Consulta (sem salvar produto):**
-- **Modo Consulta**. Analisar produtos de mentorados usando toda a metodologia VTSD, sem registrar nada no projeto. Diga "modo consulta" ou escolha a opção 4 no menu inicial
+- **Modo Consulta**. Analisar produtos de mentorados usando toda a metodologia VTSD, sem registrar nada no projeto. É o modo padrão de toda conversa nova; para voltar a ele depois de mexer num produto próprio, diga "modo consulta"
 
 **Copy:**
 - `/copy-pagina`. Criar copy e/ou página HTML profissional (vendas, captura ou obrigado)
@@ -972,6 +987,8 @@ Este projeto suporta múltiplos produtos. Cada produto tem sua própria pasta co
 
 **ANTES de executar qualquer comando:**
 
+> **No Modo Consulta (padrão), pule os passos abaixo.** Não leia `.ativo` nem o resumo do produto: o contexto do produto do mentorado vem da conversa (regras 5 e 6 do Modo Consulta). Os passos abaixo valem só quando a usuária está trabalhando num produto próprio.
+
 1. Leia `meus-produtos/.ativo` para saber o produto ativo. Se o arquivo não existir, oriente a usar `/produto-novo` primeiro.
 2. Leia `meus-produtos/{ativo}/resumo-produto.md`. **Tente ler direto, sem conferir antes se ele existe.**
    - **Se não for encontrado** e o `perfil.md` do produto tiver o Quadro preenchido: anuncie `⏳ Preparando o resumo do seu produto (só na primeira vez).`, acione o agente `gerador-resumo-produto` (síncrono) com o slug do produto e leia o resumo que ele gravar. Se você não puder acionar outro agente (ex.: é um sub-agente sem a ferramenta de agentes), gere o resumo você mesmo seguindo o modelo da seção 3 de `.claude/skills/resumo-produto/SKILL.md` e grave no mesmo caminho.
@@ -1056,7 +1073,7 @@ O que vale só no Codex (por exemplo, gerar a imagem com a ferramenta do própri
 
 ## Fluxo Padrão de Todo Comando (6 Passos)
 
-1. **Contexto**. Ler `meus-produtos/.ativo`, depois `meus-produtos/{ativo}/resumo-produto.md` (se não existir, gerar; ver "Contexto Persistente do Negócio").
+1. **Contexto**. No Modo Consulta (padrão), o contexto vem da conversa, sem ler nem gravar nada em `meus-produtos/`. Fora dele, ler `meus-produtos/.ativo`, depois `meus-produtos/{ativo}/resumo-produto.md` (se não existir, gerar; ver "Contexto Persistente do Negócio").
 2. **Entrevista**. 3 a 5 perguntas, UMA por vez.
 3. **Confirmação**. Resumir o que vai criar, pedir OK.
 4. **Geração**. Criar o entregável completo usando a metodologia VTSD.
@@ -1066,4 +1083,4 @@ O que vale só no Codex (por exemplo, gerar a imagem com a ferramenta do própri
    2. Quero ajustar algo
    ```
    Essa etapa é obrigatória. A única forma de pular é o usuário ter pedido explicitamente "ir direto à versão final" na mesma sessão.
-6. **Entrega**. Após aprovação: salvar, informar caminho, sugerir próximo comando.
+6. **Entrega**. Após aprovação: salvar, informar caminho, sugerir próximo comando. No Modo Consulta, entregar na conversa (HTML só no scratchpad), sem salvar em `meus-produtos/`.
