@@ -33,6 +33,12 @@ Fluxo obrigatório:
 
 ---
 
+## MODO CONSULTA (PADRÃO)
+
+Este comando roda por padrão no Modo Consulta (CLAUDE.md): o produto analisado é do mentorado. Não leia `meus-produtos/.ativo` nem o resumo do produto; o contexto (Quadro, preço, público, nome do mentorado) vem da conversa. Nada é salvo em `meus-produtos/` e nenhum painel é atualizado: onde este comando mandar salvar ou registrar, entregue na conversa. Os trechos sobre bullets salvos, resumo e painel só valem quando a usuária disser que a página é de um produto próprio cadastrado.
+
+---
+
 ## REGRA DE ENTREGA EM DUAS PARTES (OBRIGATÓRIA)
 
 Carregue `.claude/rules/feedback-mentorado.md` antes do primeiro bloco. Cada bloco entregue sai em duas partes, separadas por `---`:
