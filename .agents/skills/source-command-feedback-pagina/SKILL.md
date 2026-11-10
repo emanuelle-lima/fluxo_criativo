@@ -33,6 +33,23 @@ Fluxo obrigatório:
 
 ---
 
+## MODO CONSULTA (PADRÃO)
+
+Este comando roda por padrão no Modo Consulta (CLAUDE.md): o produto analisado é do mentorado. Não leia `meus-produtos/.ativo` nem o resumo do produto; o contexto (Quadro, preço, público, nome do mentorado) vem da conversa. Nada é salvo em `meus-produtos/` e nenhum painel é atualizado: onde este comando mandar salvar ou registrar, entregue na conversa. Os trechos sobre bullets salvos, resumo e painel só valem quando a usuária disser que a página é de um produto próprio cadastrado.
+
+---
+
+## REGRA DE ENTREGA EM DUAS PARTES (OBRIGATÓRIA)
+
+Carregue `.claude/rules/feedback-mentorado.md` antes do primeiro bloco. Cada bloco entregue sai em duas partes, separadas por `---`:
+
+1. `## PARTE 1. Nota de análise`: o bloco no formato de output desta skill, sem mudança nenhuma.
+2. `## PARTE 2. Mensagem pronta para copiar`: a mensagem para o mentorado sobre o tema do bloco, dentro de um bloco de código e com formatação de WhatsApp, escrita pelo prompt da regra. O tom consultivo da regra vale para esta parte; o tom desta skill vale para a Parte 1.
+
+A pergunta de continuidade do bloco vem depois da Parte 2. Se o nome do mentorado ainda não foi informado, pergunte uma vez antes do primeiro bloco (no Passo 1, junto da coleta de contexto, como pergunta separada).
+
+---
+
 ## Erros críticos que não podem passar despercebidos
 
 Cada erro vem com a citação original do Leandro como referência de tom e prioridade.
@@ -505,7 +522,12 @@ Feedback completo entregue. O que quer fazer agora?
 2. Receber a copy corrigida + página HTML nova (usar /copy-pagina depois)
 3. Já tenho o que preciso, obrigado
 4. Página está dentro do padrão mas tráfego não converte. Escalar para o Leandro
+5. Receber a mensagem completa para o mentorado (todos os blocos juntos)
 ```
+
+### Opção 5. Mensagem completa para o mentorado
+
+Junte as Partes 2 dos blocos entregues numa mensagem única, pelo prompt de `.claude/rules/feedback-mentorado.md`: uma só abertura, temas agrupados sem repetição, uma seção curta de prioridades e um só fechamento. Entregue dentro de um bloco de código, com formatação de WhatsApp.
 
 ### Opção 1. Copy Corrigida (texto)
 
