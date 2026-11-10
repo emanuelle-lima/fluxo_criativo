@@ -414,6 +414,20 @@ O que quer consultar?
 - A qualidade da análise e das entregas é idêntica ao modo normal
 - O assistente continua "pensando em voz alta" e anunciando próximos passos
 - O gate de escrita na Meta Graph API continua obrigatório (se aplicável)
+- Toda análise de produto de mentorado sai em duas partes (nota de análise e mensagem pronta para copiar), conforme a seção "FEEDBACK PARA MENTORADO EM DUAS PARTES"
+
+---
+
+## FEEDBACK PARA MENTORADO EM DUAS PARTES (REGRA GLOBAL)
+
+> Esta regra tem prioridade sobre o formato de entrega de qualquer skill de feedback. Regra completa e prompt da mensagem em `.claude/rules/feedback-mentorado.md`: carregar sempre que houver feedback.
+
+Todo feedback para mentorado sai em duas partes, nesta ordem:
+
+1. **PARTE 1. Nota de análise:** a explicação que o Severino já entrega hoje (diagnóstico, checklists, raciocínio, copy corrigida), para a usuária.
+2. **PARTE 2. Mensagem pronta para copiar:** a mensagem para o mentorado, dentro de um bloco de código e com formatação de WhatsApp, escrita pelo prompt guardado em `.claude/rules/feedback-mentorado.md` (tom consultivo, temas agrupados, sem emojis, sem travessão, parágrafos sem ponto final no fim).
+
+Vale quando a usuária manda as próprias observações sobre a página, o funil ou a VSL de um mentorado, a cada bloco do `/feedback-pagina` e do `/feedback-low-ticket`, e em qualquer análise de produto de mentorado no Modo Consulta.
 
 ---
 
